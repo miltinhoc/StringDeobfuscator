@@ -9,11 +9,11 @@ I believe this is achieved with some type of obfuscator, as I have seen this in 
 ![image](https://github.com/miltinhoc/StringDeobfuscator/assets/26238419/3e368628-c9db-43cb-9417-c6372f4df0f1)
 ![image](https://github.com/miltinhoc/StringDeobfuscator/assets/26238419/234cf25b-9a26-4c2c-b669-63b1bfd3ab7c)
 
-This tool is designed to automate the process of extracting and replacing strings from the DLLs. The process is as follows:
-1. Scanning the DLL for a method with a specific signature that leverages the ``AppDomain.CurrentDomain.GetData`` method.
+This tool is designed to automate the process of extracting and replacing strings from the assemblies. The process is as follows:
+1. Scanning the assembly for a method with a specific signature that leverages the ``AppDomain.CurrentDomain.GetData`` method.
 2. Once identified, the tool invokes this method iteratively to enumerate and retrieve the stored strings.
 3. The tool then replaces the identified method calls in the code with the actual strings retrieved from step 2.
-4. It then compiles the modified code and saves the patched DLL to disk.
+4. It then compiles the modified code and saves the patched assembly to disk.
 
 ## Example
 
