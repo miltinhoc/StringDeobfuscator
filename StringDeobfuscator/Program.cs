@@ -10,7 +10,6 @@ namespace StringDeobfuscator
 {
     public class Program
     {
-        private readonly static string _usage = " [*] Usage: StringDeobfuscator [-options]";
         private static AssemblyManager _assemblyManager;
         private static DeobfuscationManager _deobfuscationManager;
 
@@ -18,9 +17,11 @@ namespace StringDeobfuscator
         {
             if (args.Length != 1)
             {
-                Logger.Print(_usage, LogType.ERROR);
+                ShowHelp();
                 Environment.Exit(0);
             }
+
+            Header.Draw();
 
             string filepath = args[0];
 
@@ -51,6 +52,16 @@ namespace StringDeobfuscator
 
             Console.WriteLine("[*] Press any key to exit...");
             Console.Read();
+        }
+
+        private static void ShowHelp()
+        {
+            string c = @"Usage: StringDeobfuscator.exe [-options]
+
+options:
+	<assembly path>		your .net assembly path";
+
+            Console.WriteLine(c);
         }
     }
 }
