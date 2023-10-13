@@ -6,8 +6,8 @@ This is achieved using the AppDomain.CurrentDomain.GetData method. This approach
 
 I believe this is achieved with some type of obfuscator, as I have seen this in other assemblies, but not sure which one yet.
 
-![image](https://github.com/miltinhoc/StringDeobfuscator/assets/26238419/3e368628-c9db-43cb-9417-c6372f4df0f1)
-![image](https://github.com/miltinhoc/StringDeobfuscator/assets/26238419/234cf25b-9a26-4c2c-b669-63b1bfd3ab7c)
+![image](https://github.com/miltinhoc/StringDeobfuscator/assets/26238419/d15f500b-7235-41b8-a3df-3bfaeb927dc1)
+![image](https://github.com/miltinhoc/StringDeobfuscator/assets/26238419/0be9e3fb-3ac2-4823-87d1-4660e9d26995)
 
 This tool is designed to automate the process of extracting and replacing strings from the assemblies. The process is as follows:
 1. Scanning the assembly for a method with a specific signature that leverages the ``AppDomain.CurrentDomain.GetData`` method.
@@ -18,10 +18,10 @@ This tool is designed to automate the process of extracting and replacing string
 ## Example
 
 Before:
-![image](https://github.com/miltinhoc/StringDeobfuscator/assets/26238419/f9cef9c7-aed2-4ff9-b9f8-eca54a101b9f)
+![image](https://github.com/miltinhoc/StringDeobfuscator/assets/26238419/69efbfe0-b31d-40c1-ad61-9461b149367e)
 
 After:
-![image](https://github.com/miltinhoc/StringDeobfuscator/assets/26238419/7557a779-13cf-43ed-98b7-8655712714a6)
+![image](https://github.com/miltinhoc/StringDeobfuscator/assets/26238419/0c77ccf0-b6be-4bff-bb4b-a29ac3544092)
 
 ## Todo
 1. Instead of brute-forcing a set of possibilities, a better way would be to understand all the numbers used to fetch strings and then only try those. This is possible to implement right now since all the necessary code is kinda there
