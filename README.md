@@ -1,6 +1,8 @@
 # string.deobfuscator
 
-Some .NET assemblies employ a unique form of obfuscation by storing their strings in a Hashtable within the application domain's data. This is achieved using the AppDomain.CurrentDomain.GetData method. This approach involves storing and retrieving data using non-descriptive method names and integer keys, which adds a layer of obscurity and makes the code harder to reverse engineer.
+Some .NET assemblies employ a unique form of obfuscation by storing their strings in a Hashtable within the application domain's data. 
+
+This is achieved using the AppDomain.CurrentDomain.GetData method. This approach involves storing and retrieving data using non-descriptive method names and integer keys, which adds a layer of obscurity and makes the code harder to reverse engineer.
 
 I believe this is achieved with some type of obfuscator, as I have seen this in other assemblies, but not sure which one yet.
 
