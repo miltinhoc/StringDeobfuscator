@@ -18,7 +18,7 @@ namespace StringDeobfuscator
         {
             if (args.Length != 1)
             {
-                Logging.Logger.Print(_usage, Logging.LogType.ERROR);
+                Logger.Print(_usage, LogType.ERROR);
                 Environment.Exit(0);
             }
 
@@ -42,7 +42,15 @@ namespace StringDeobfuscator
                 _assemblyManager.GetFoundValues());
 
             _deobfuscationManager.FindObfuscatedMethods();
-            _deobfuscationManager.SaveDll($"output_{Path.GetFileName(filepath)}");
+
+            string filename = $"output_{Path.GetFileName(filepath)}";
+
+            _deobfuscationManager.SaveDll(filename);
+
+            Logger.Print($"[*] Saved deobfuscated assembly to '{Path.Combine(Environment.CurrentDirectory, filename)}'", LogType.INFO);
+
+            Console.WriteLine("[*] Press any key to exit...");
+            Console.Read();
         }
     }
 }
