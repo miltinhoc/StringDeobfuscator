@@ -1,5 +1,6 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using StringDeobfuscator.Logging;
 using StringDeobfuscator.Model;
 using System.Collections.Generic;
 
@@ -24,8 +25,12 @@ namespace StringDeobfuscator.Manager
 
         public void Start()
         {
+            Logger.Print("[*] trying to find obfuscation method...", LogType.INFO);
+
             SearchDLLForReference(_dllPath);
             _found = (_methods.Count > 0) ? true : false;
+
+            Logger.Print($"[*] obfuscation method {((_found) ? "found!" : "not found!")}", LogType.INFO);
         }
 
         public bool Found() => _found;

@@ -1,4 +1,5 @@
-﻿using StringDeobfuscator.Manager;
+﻿using StringDeobfuscator.Logging;
+using StringDeobfuscator.Manager;
 using StringDeobfuscator.Model;
 using System;
 using System.Collections.Generic;
@@ -27,13 +28,12 @@ namespace StringDeobfuscator
             _assemblyManager.Start();
 
             if (_assemblyManager.GetMethods().Count == 0)
-            {
-                Logging.Logger.Print("[*] No method found", Logging.LogType.WARN);
                 Environment.Exit(0);
-            }
 
             List<FoundValue> values = EnumerationManager.Enumerate(_assemblyManager.GetMethods().First());
             _assemblyManager.SetFoundValues(values);
+
+            Logger.Print($"[*] found && deobfuscated {values.Count} obfuscated values!", LogType.INFO);
 
             _deobfuscationManager = new DeobfuscationManager(
                 filepath,
