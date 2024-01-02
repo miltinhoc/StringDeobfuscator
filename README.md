@@ -22,6 +22,3 @@ Before:
 
 After:
 ![image](https://github.com/miltinhoc/StringDeobfuscator/assets/26238419/0c77ccf0-b6be-4bff-bb4b-a29ac3544092)
-
-## Todo
-1. Instead of brute-forcing a set of possibilities, a better way would be to understand all the numbers used to fetch strings and then only try those. This is possible to implement right now since all the necessary code is kinda there
