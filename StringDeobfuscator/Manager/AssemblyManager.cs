@@ -10,7 +10,6 @@ namespace StringDeobfuscator.Manager
     {
         private readonly string _dllPath;
         private readonly List<MethodInformation> _methods;
-        private List<FoundValue> _foundValues;
         private bool _found;
 
         public AssemblyManager(string dllPath)
@@ -19,21 +18,15 @@ namespace StringDeobfuscator.Manager
             _methods = new List<MethodInformation>();
         }
 
-        public void SetFoundValues(List<FoundValue> values) => _foundValues = values;
-
-        public List<FoundValue> GetFoundValues() => _foundValues;
-
         public void Start()
         {
             Logger.Print("[*] trying to find obfuscation method...", LogType.INFO);
 
             SearchDLLForReference(_dllPath);
-            _found = (_methods.Count > 0) ? true : false;
+            _found = (_methods.Count > 0);
 
             Logger.Print($"[*] obfuscation method {((_found) ? "found!" : "not found!")}", LogType.INFO);
         }
-
-        public bool Found() => _found;
 
         public List<MethodInformation> GetMethods() => _methods;
 

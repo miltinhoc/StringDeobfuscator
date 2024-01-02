@@ -1,7 +1,8 @@
 ﻿using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using StringDeobfuscator.Model;
-using System.Collections.Generic;
+using StringDeobfuscator.Logging;
+using System;
+using System.Reflection;
 
 namespace StringDeobfuscator.Manager
 {
@@ -11,21 +12,33 @@ namespace StringDeobfuscator.Manager
         private readonly string _whiteListType = "dnlib.DotNet.MethodDefMD";
         private readonly string _deobfuscationTypeName;
         private readonly string _deobfuscationMethodName;
-        private readonly List<FoundValue> _outsystemValues;
         private ModuleDefMD _module;
 
-        public DeobfuscationManager(string dllPath, string typeName, string methodName, List<FoundValue> values)
+        private MethodInfo _methodInfo;
+        private Type _type;
+
+        public DeobfuscationManager(string dllPath, string typeName, string methodName)
         {
             _dllPath = dllPath;
             _deobfuscationTypeName = typeName;
             _deobfuscationMethodName = methodName;
-            _outsystemValues = values;
+
+            GetReferences();
+        }
+
+        private void GetReferences()
+        {
+            Assembly assembly = Assembly.LoadFile(_dllPath);
+            _type = assembly.GetType(_deobfuscationTypeName, throwOnError: true, ignoreCase: false);
+            _methodInfo = _type.GetMethod(_deobfuscationMethodName);
         }
 
         public void FindObfuscatedMethods()
         {
             ModuleContext modCtx = ModuleDef.CreateModuleContext();
             _module = ModuleDefMD.Load(_dllPath, modCtx);
+
+            int count = 0;
 
             foreach (TypeDef type in _module.GetTypes())
             {
@@ -44,6 +57,7 @@ namespace StringDeobfuscator.Manager
                             if (string.IsNullOrEmpty(v))
                                 continue;
 
+                            count += 1;
                             Instruction newInstruction = new Instruction(OpCodes.Ldstr, v);
                             method.Body.Instructions[i] = newInstruction;
 
@@ -56,6 +70,8 @@ namespace StringDeobfuscator.Manager
                     }
                 }
             }
+
+            Logger.Print($"[*] Patched {count.ToString("N0")} method calls.", LogType.INFO);
         }
 
         public void SaveDll(string path)
@@ -66,13 +82,16 @@ namespace StringDeobfuscator.Manager
 
         private string FindValue(string key)
         {
-            for (int i = 0; i < _outsystemValues.Count; i++)
+            try
             {
-                if (_outsystemValues[i].Key.ToString() == key)
+                string result = (string)_methodInfo.Invoke(null, new object[] { Convert.ToInt32(key) });
+
+                if (!string.IsNullOrEmpty(result))
                 {
-                    return _outsystemValues[i].Value;
+                    return result;
                 }
             }
+            catch { }
 
             return string.Empty;
         }
