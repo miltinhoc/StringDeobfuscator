@@ -27,7 +27,10 @@ namespace StringDeobfuscator
             _assemblyManager.Start();
 
             if (_assemblyManager.GetMethods().Count == 0)
+            {
+                Logger.Print("[*] Couldn't find encryption method.", LogType.ERROR);
                 Environment.Exit(0);
+            }
 
             _deobfuscationManager = new DeobfuscationManager(
                 filepath,
